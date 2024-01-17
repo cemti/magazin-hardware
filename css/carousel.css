@@ -1,0 +1,91 @@
+.carousel-container {
+	position: relative;
+	border-radius: var(--border-radius);
+	aspect-ratio: 2 / 1;
+	overflow: hidden
+}
+
+.carousel-container > :is(.carousel, .carousel-arrow, .carousel-bullets) {
+	transition: .5s
+}
+
+.carousel-container > .carousel {
+	transform: translateX(calc(-100% * var(--idx, 0)));
+	white-space: nowrap;
+	height: 100%
+}
+
+.carousel-container > .carousel > img {
+	aspect-ratio: 2 / 1;
+	height: 100%
+}
+
+.carousel-container > .carousel-arrow {
+	background: linear-gradient(var(--direction), var(--main-color), transparent);
+	position: absolute;
+	top: 0;
+	bottom: 30px;
+	margin: auto;
+	padding: 15px;
+	height: max-content;
+	color: white;
+	user-select: none;
+	font: 30pt monospace;
+	cursor: pointer
+}
+
+.carousel-container:not(:hover) > .carousel-arrow {
+	visibility: hidden;
+	transform: scale(0, 1)
+}
+
+.carousel-container:not(:hover) > .carousel-bullets {
+	visibility: hidden;
+	transform: scale(1, 0)
+}
+
+.carousel-container > .carousel-arrow::after {
+	content: var(--content);
+}
+
+.carousel-container > .carousel-arrow.left {
+	transform-origin: left;
+	--direction: to right;
+	--content: '<'
+}
+
+.carousel-container > .carousel-arrow.right {
+	right: 0;
+	transform-origin: right;
+	--direction: to left;
+	--content: '>'
+}
+
+.carousel-container > .carousel-bullets {
+	background: linear-gradient(var(--main-color), transparent);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-radius: var(--border-radius);
+	padding: var(--gap);
+	display: flex;
+	margin: auto;
+	width: max-content;
+	line-height: 30px;
+	gap: var(--gap);
+	color: var(--main-color);
+	transform-origin: bottom;
+}
+
+.carousel-container > .carousel-bullets > .carousel-bullet {
+	width: 15px;
+	height: 15px;
+	border: 1px var(--content-color) solid;
+	border-radius: var(--border-radius);
+	cursor: pointer
+}
+
+.carousel-container > .carousel-bullets > .carousel-bullet.selected {
+	background: var(--content-color)
+}

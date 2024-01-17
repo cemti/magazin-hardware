@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="Cristian Cemîrtan" />
+	<meta name="description" content="Produsele la prețuri atractive." />
+	<meta name="keywords" content="magazin, hardware, cpu, gpu, hdd, ssd, motherboard" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" href="img/favicon.ico" />
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/cart.css" />
+	<link rel="stylesheet" href="css/products.css" />
+	<script src="js/cart.js" defer></script>
+	<script src="js/products.js" defer></script>
+	<title>Toate produsele | Magazin Hardware</title>
+	<style>
+aside form > label {
+	display: contents
+}
+
+@media (max-width: 703px) and (orientation: landscape) {
+	nav {
+		flex-wrap: wrap
+	}
+	
+	nav > :nth-last-child(2) {
+		border-right-style: solid
+	}
+	
+	nav > details:first-of-type {
+		border-top-style: solid
+	}
+}
+
+@media (max-width: 350px) {
+	#query {
+		font-size: small
+	}
+}
+	</style>
+</head>
+<body>
+	<header class="space-between">
+		<a draggable="false" id="logo" title="Pagina principală" href="index.html"></a>
+		<details id="cartView">
+			<summary>
+				Coș: <span class="cart-count count">0</span>, <span class="cart-total price">0.00</span>
+			</summary>
+			<div class="dropdown">
+				<form name="cart" action="checkout.html">
+					<table class="cart-table">
+						<thead>
+							<tr>
+								<th>Produs</th>
+								<th>Cantitate</th>
+								<th>Preț</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+						<tfoot>
+							<tr>
+								<td>Total:</td>
+								<td class="cart-count count"></td>
+								<td class="cart-total price"></td>
+							</tr>
+						</tfoot>
+					</table>
+					<template id="cartBodyRowTemplate">
+						<tr>
+							<td><span title="Click pentru a șterge" class="cart-remove-item"></span></td>
+							<td class="count"><input type="number" min="1" required /></td>
+							<td class="price"></td>
+						</tr>
+					</template>
+					<hr />
+					<div class="space-between">
+						<button name="cancel" class="cancel" type="button">Anulează</button>
+						<button class="accept">Comandă</button>
+					</div>
+				</form>
+				<span>Coșul este gol.</span>
+			</div>
+		</details>
+	</header>
+	<nav>
+		<div class="menu">
+			<a data-view="hardware" class="menu-name">Piese</a>
+			<div class="dropdown column-flow">
+				<div class="decorated category-list">
+					<span class="title">Componente</span>
+					<a data-view="cpu">CPU</a>
+					<a data-view="gpu">GPU</a>
+					<a data-view="ram">RAM</a>
+					<a data-view="mb">Plăci de bază</a>
+				</div>
+				<div class="decorated category-list">
+					<span class="title">Periferice</span>
+					<a data-view="mouse">Mouse</a>
+					<a data-view="kb">Tastiere</a>
+					<a data-view="cam">Camere web</a>
+				</div>	
+			</div>
+		</div>
+		<div class="menu">
+			<a data-view="computer" class="menu-name">Calculatoare</a>
+			<div class="dropdown column-flow">
+				<div class="decorated category-list">
+					<a data-view="pc">Staționar</a>
+					<a data-view="laptop">Laptop</a>
+				</div>
+			</div>
+		</div>
+		<a href="contact.html">Contacte</a>
+		<a href="about.html">Despre noi</a>
+		<details class="query-box-opener" ontoggle="document.querySelector('aside').hidden = !this.open; if ('localStorage' in window) localStorage.showQueryBox = this.open;">
+			<summary>Căutarea avansată</summary>
+		</details>
+	</nav>
+	<aside hidden>
+		<form id="query" name="query">
+			<input name="view" type="hidden" />
+			<label>Sortarea:
+				<select name="sort">
+					<optgroup label="Ordinea adăugării">
+						<option value="0_0">Cronologică</option>
+						<option value="0_1">Inversă</option>
+					</optgroup>
+					<optgroup label="Preț">
+						<option value="1_0">Crescătoare</option>
+						<option value="1_1">Descrescătoare</option>
+					</optgroup>
+				</select>
+			</label>
+			<label>După furnizor:
+				<select name="vendor">
+					<option value="">Toate</option>
+				</select>
+			</label>
+			<label>După model: <input name="search" type="search" /></label>
+			<label>Itemi/pagină:
+				<span>
+					<label><input name="limit" type="radio" value="16" checked />16</label>
+					<label><input name="limit" type="radio" value="32" />32</label>
+					<span style="white-space: nowrap">
+						<label><input name="limit" type="radio" value="64" />64</label>
+						<label><input name="limit" type="radio" value="nan" />Nelimitat</label>
+					</span>
+				</span>
+			</label>
+			<button style="grid-column: 1 / 3">Filtrează</button>
+		</form>
+		<script>if ('localStorage' in window && localStorage.showQueryBox === 'true') document.querySelector('nav > details').open = true;</script>
+	</aside>
+	<main>
+		<article style="margin-bottom: 20px">
+			<h1 id="produse">Toate produsele</h1>
+			<section class="showcase"></section>
+			<template id="itemEntryTemplate">
+				<div class="showcase-item">
+					<img alt="Imagine produs" />
+					<span class="title"></span>
+					<button class="add">Adaugă în coș - <span class="price"></span></button>
+					<label>Cantitate: <span class="count"><input type="number" min="1" required /></span></label>
+					<span class="item-added-indicator">Adăugat în coș</span>
+				</div>
+			</template>
+			<noscript>
+				<strong style="color: red">Vă rog să activați Javascript pentru a continua cumpărăturile.</strong>
+			</noscript>
+		</article>
+		<hr style="margin: 15px" />
+		<article class="pagination-container">
+			<template id="paginationTemplate">
+				<button form="query" name="page" class="pagination"></button>
+			</template>
+		</article>
+	</main>
+	<footer>
+		<div class="column-flow">
+			<div class="category-list">
+				<span class="title">Despre „Magazin Hardware”</span>
+				<a href="about.html#despre-proiect">Concepția bazei de date</a>
+				<a href="about.html#sgbd">Mini-SGBD</a>
+				<a href="about.html#ls">Lucrarea științifică</a>
+			</div>
+			<div class="category-list">
+				<span class="title">Despre autor</span>
+				<a href="file:///E:/eBook/USM/HTML/laborator/individual/contact.html">Contacte</a>
+				<a target="_blank" href="https://sites.google.com/view/cemirtantic">Siteul personal</a>
+				<a target="_blank" href="https://cemirtan.blogspot.com/">Blogul personal</a>
+			</div>
+		</div>
+		<hr />
+		<div style="text-align: center">Copyright © Cristian Cemîrtan 2022</div>
+	</footer>
+</body>
+</html>

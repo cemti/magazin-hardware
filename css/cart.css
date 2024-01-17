@@ -1,0 +1,122 @@
+@charset "utf-8";
+
+.count::after {
+	content: ' unit.'
+}
+
+.price::after {
+	content: ' lei'
+}
+
+.cart-table {
+	border-collapse: collapse;
+	width: 100%
+}
+
+.cart-table > tbody {
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	counter-reset: index
+}
+
+.cart-table > tbody > tr > :first-child::before {
+	counter-increment: index;
+	font-weight: 500;
+	content: counter(index)'. '
+}
+
+.cart-table > * > tr > * {
+	padding-inline: 10px
+}
+
+.cart-table > * > tr > :nth-child(n + 2) {
+	border-left: 1px solid
+}
+
+.cart-table > tfoot {
+	font-weight: bold
+}
+
+.cart-table .count > input {
+	width: 50px
+}
+
+form[name='cart'] {
+	background: inherit
+}
+
+.cart-remove-item::before {
+	content: '⌫';
+	margin-inline: 3px;
+	cursor: pointer;
+	float: right
+}
+
+.cart-remove-item:hover {
+	color: red
+}
+
+#cartView > summary {
+	border-radius: var(--border-radius);
+	padding: 5px 8px;
+	background: white;
+	user-select: none;
+	font: inherit
+}
+
+#cartView > summary::before {
+	content: '🛒'
+}
+
+#cartView:not([data-has-items]) {
+	position: relative
+}
+
+#cartView:not([data-has-items]) > .dropdown {
+	box-sizing: border-box;
+	right: unset;
+	left: unset;
+	text-align: center;
+	width: 100%
+}
+
+#cartView[data-has-items] > .dropdown > :not(form[name='cart']),
+#cartView:not([data-has-items]) > .dropdown > form[name='cart'] {
+	display: none
+}
+
+#cartView[open] > summary {
+	border-radius: var(--border-radius) var(--border-radius) 0 0;
+	border-bottom: 1px var(--dark-color) dashed;
+	padding-bottom: 3px
+}
+
+#cartView > .dropdown {
+	right: var(--margin);
+	box-shadow: 0 6px 2px 1px var(--dark-color);
+	z-index: 3
+}
+
+@media (min-width: 701px) {
+	#cartView[data-has-items] > .dropdown {
+		border-radius: var(--border-radius) 0 var(--border-radius) var(--border-radius)
+	}
+}
+
+@media (max-width: 700px) {
+	#cartView {
+		width: 100%
+	}
+	
+	#cartView > summary {
+		text-align: center
+	}
+	
+	#cartView > .dropdown {
+		left: var(--margin)
+	}
+	
+	#cartView[data-has-items] > .dropdown {
+		font-size: small
+	}
+}

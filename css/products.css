@@ -1,0 +1,77 @@
+.showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: calc(4 * var(--gap))
+}
+
+.showcase:empty::after {
+	content: ' Nu există nici un element.'
+}
+
+.showcase-item {
+	max-width: 280px;
+	position: relative;
+	display: flex;
+	gap: calc(.6 * var(--gap));
+	flex-direction: column;
+	transition: .25s
+}
+
+.showcase-item:hover {
+	transform: scale(1.03);
+	filter: drop-shadow(0 0 5px black)
+}
+
+.showcase.item > :is(img, label) {
+	border-radius: var(--border-radius)
+}
+
+.showcase-item > img {
+	aspect-ratio: 1 / 1;
+	border: 1px var(--secondary-color) solid;
+	border-radius: var(--border-radius)
+}
+
+.showcase-item > label {
+	transition: .25s;
+	border: var(--secondary-color) dashed;
+	border-radius: var(--border-radius);
+	border-width: 0 1px 1px 1px;
+	padding: 0 3px 3px 3px;
+	font-weight: 500
+}
+
+.showcase-item > .title {
+	flex-grow: 1
+}
+
+.showcase-item:not(:is(:hover, :focus-within)) > label {
+	visibility: hidden;
+	opacity: 0
+}
+
+.showcase-item > label > .count {
+	float: right
+}
+
+.showcase-item > label > .count > input {
+	width: 50px
+}
+
+/* Animatiile sunt realizate in JS */
+.showcase-item .item-added-indicator {
+	visibility: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: yellowgreen;
+	font-size: large;
+	font-weight: 600;
+	padding: 5px;
+	user-select: none
+}
+
+.showcase-item .price {
+	font-size: 1.05em;
+	font-weight: 600
+}

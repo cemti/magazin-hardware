@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="Cristian Cemîrtan" />
+	<meta name="description" content="Aici finalizați cumpărăturile." />
+	<meta name="keywords" content="magazin, hardware, cpu, gpu, hdd, ssd, motherboard" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" href="img/favicon.ico" />
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/cart.css" />
+	<link rel="stylesheet" href="css/products.css" />
+	<link rel="stylesheet" href="css/checkout.css" />
+	<script src="js/cart.js" defer></script>
+	<script src="js/checkout.js" defer></script>
+	<title>Plasarea comenzii | Magazin Hardware</title>
+	<script>
+document.write('<style>#cartView:not([open]) > summary { background: red; color: white }</style>');
+	</script>
+</head>
+<body>
+	<header class="space-between">
+		<a draggable="false" id="logo" title="Pagina principală" href="index.html"></a>
+		<details id="cartView" open>
+			<summary>
+				Coș: <span class="cart-count count">0</span>, <span class="cart-total price">0.00</span>
+			</summary>
+			<div class="dropdown">
+				<form name="cart" action="index.html">
+					<table class="cart-table">
+						<thead>
+							<tr>
+								<th>Produs</th>
+								<th>Cantitate</th>
+								<th>Preț</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+						<tfoot>
+							<tr>
+								<td>Total:</td>
+								<td class="cart-count count"></td>
+								<td class="cart-total price"></td>
+							</tr>
+						</tfoot>
+					</table>
+					<template id="cartBodyRowTemplate">
+						<tr>
+							<td></td>
+							<td class="count"><output></output></td>
+							<td class="price"></td>
+						</tr>
+					</template>
+				</form>
+				<span>Coșul este gol.</span>
+			</div>
+		</details>
+	</header>
+	<nav>
+		<div class="menu">
+			<a data-view="hardware" class="menu-name">Piese</a>
+			<div class="dropdown column-flow">
+				<div class="decorated category-list">
+					<span class="title">Componente</span>
+					<a data-view="cpu">CPU</a>
+					<a data-view="gpu">GPU</a>
+					<a data-view="ram">RAM</a>
+					<a data-view="mb">Plăci de bază</a>
+				</div>
+				<div class="decorated category-list">
+					<span class="title">Periferice</span>
+					<a data-view="mouse">Mouse</a>
+					<a data-view="kb">Tastiere</a>
+					<a data-view="cam">Camere web</a>
+				</div>	
+			</div>
+		</div>
+		<div class="menu">
+			<a data-view="computer" class="menu-name">Calculatoare</a>
+			<div class="dropdown column-flow">
+				<div class="decorated category-list">
+					<a data-view="pc">Staționar</a>
+					<a data-view="laptop">Laptop</a>
+				</div>
+			</div>
+		</div>
+		<a href="contact.html">Contacte</a>
+		<a href="about.html">Despre noi</a>
+	</nav>
+	<main>
+		<article>
+			<h1 id="plaseaza-comanda">Plasează comanda</h1>
+			<section>
+				<form id="checkout" name="checkout">
+					<h2>Completați formularul</h2>
+					<p id="formWarn">Examinați cu atenție coșul de cumpărături și <span>apoi completați formularul</span>.</p>
+					<p style="font-size: larger">Comanda vă costă: <strong><span class="cart-total price">0.00</span></strong>.</p>
+					<fieldset>
+						<legend>Datele personale</legend>
+						<div>
+							<label>Nume: <input name="nume" pattern="[A-Za-zăĂâÂșȘțȚîÎ]+" placeholder="Cemîrtan" required /></label>
+							<label>Prenume: <input name="prenume" pattern="[A-Za-zăĂâÂșȘțȚîÎ]+" placeholder="Cristian" required /></label>
+							<label>Număr de contact: <input name="tel" type="tel" pattern="(\+\d\d{3,14})|(0[67]\d{7})" placeholder="internațional sau local" required /></label>
+							<label>Poșta electronică: <input name="email" type="email" placeholder="cemirtan.cristian@usm.md" required /></label>
+						</div>
+						<fieldset>
+							<legend>Datele de livrare</legend>
+							<div>
+								<label>Adresă de livrare: <input name="adr" pattern="[A-Za-zăĂâÂșȘțȚîÎ].*" placeholder="str. Alexei Mateevici 60, Chișinău" required /></label>
+								<label>Comentariu: <textarea name="comment" rows="6"></textarea></label>
+							</div>
+						</fieldset>
+						
+						<hr />
+						<label style="display: block; margin-bottom: 5px"><input type="checkbox" name="agree" required /> Sunt de acord cu <a href="javascript:document.body.style.overflow = 'hidden'; tos.showModal();">termenii de utilizare</a> a siteului „Magazin Hardware”</label>
+						<button name="submit" class="accept">Expediază</button>
+						<strong id="formAlert" hidden>Pentru siguranța dvs., vă rog să afișați coșul de cumpărături.</strong>
+					</fieldset>
+				</form>
+				<div id="images" style="flex-grow: 1">
+					<h2>Imaginile produselor</h2>
+					<div class="showcase"></div>
+				</div>
+			</section>
+		</article>
+		<dialog id="tos">
+			<div>
+				<h1>Termenii de utilizare</h1>
+				<form method="dialog" onsubmit="document.body.style.overflow = ''">
+					<button class="close"></button>
+				</form>
+			</div>
+			<div style="overflow: auto">
+				<p>Pentru a beneficia din plin de avantajele <i>„Magazin Hardware”</i>, este necesar să fiți conformat condiţiilor generale de utilizare detaliate mai jos precum şi ansamblului de legi aplicabile. Atunci când parcurgeți şi utilizați acest site, acceptați implicit şi necondiţionat termenii respectivi. <strong>Noi ne rezervăm dreptul</strong> de a actualiza prezentul set de reguli în orice moment, fără o notificare prealabilă. Modificările operate îţi sunt opozabile din momentul publicării acestora pe site. <em>În realitate, Magazin Hardware este un proiect individual ce simulează o întreprindere (magazin online) ce se ocupă cu vinderea produselor tehnice și a pieselor de calcul.</em></p>
+				<p>Datele culese din formular nu se memorizează nicăieri, fiindcă acest site este rulat local fără a fi dependent pe partea serverului.</p>
+				<p>Acest site a fost realizat de la zero (from scratch), utilizănd HTML5, CSS și JavaScript cu <strong style="color: red">semantică strictă</strong>. Vă aducem la cunoștință că la realizarea siteului întreg nu fost utilizată nici un framework extern (ex. Bootstrap și jQuery). Datele privind coșul de cumpărături și comportamentul siteului sunt stocate în memorie de stocare locală a browserului, care este denumită <code>localStorage</code>. În mod asemănător cu cookies, ele pot fi șterse din inițiativa utilizatorului.</p>
+			</div>
+		</dialog>
+	</main>
+	<footer>
+		<div class="column-flow">
+			<div class="category-list">
+				<span class="title">Despre „Magazin Hardware”</span>
+				<a href="about.html#despre-proiect">Concepția bazei de date</a>
+				<a href="about.htmlabout.html#sgbd">Mini-SGBD</a>
+				<a href="about.htmlabout.html#ls">Lucrarea științifică</a>
+			</div>
+			<div class="category-list">
+				<span class="title">Despre autor</span>
+				<a href="file:///E:/eBook/USM/HTML/laborator/individual/contact.html">Contacte</a>
+				<a target="_blank" href="https://sites.google.com/view/cemirtantic">Siteul personal</a>
+				<a target="_blank" href="https://cemirtan.blogspot.com/">Blogul personal</a>
+			</div>
+		</div>
+		<hr />
+		<div style="text-align: center">Copyright © Cristian Cemîrtan 2022</div>
+	</footer>
+</body>
+</html>

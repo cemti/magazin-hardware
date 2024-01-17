@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="Cristian Cemîrtan" />
+	<meta name="description" content="Magazin Hardware este locul potrivit unde poti gasi piese de calcul la preturi avantajoase." />
+	<meta name="keywords" content="magazin, hardware, cpu, gpu, hdd, ssd, motherboard" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" href="img/favicon.ico" />
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/cart.css" />
+	<link rel="stylesheet" href="css/carousel.css" />
+	<script src="js/cart.js" defer></script>
+	<script src="js/carousel.js" defer></script>
+	<title>Magazin Hardware</title>
+	<noscript>
+		<style>
+.carousel-container {
+	display: none
+}
+		</style>
+	</noscript>
+</head>
+<body>
+	<header class="space-between">
+		<a draggable="false" id="logo" title="Pagina principală" href="index.html"></a>
+		<details id="cartView">
+			<summary>
+				Coș: <span class="cart-count count">0</span>, <span class="cart-total price">0.00</span>
+			</summary>
+			<div class="dropdown">
+				<form name="cart" action="checkout.html">
+					<table class="cart-table">
+						<thead>
+							<tr>
+								<th>Produs</th>
+								<th>Cantitate</th>
+								<th>Preț</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+						<tfoot>
+							<tr>
+								<td>Total:</td>
+								<td class="cart-count count"></td>
+								<td class="cart-total price"></td>
+							</tr>
+						</tfoot>
+					</table>
+					<template id="cartBodyRowTemplate">
+						<tr>
+							<td><span title="Click pentru a șterge" class="cart-remove-item"></span></td>
+							<td class="count"><input type="number" min="1" required /></td>
+							<td class="price"></td>
+						</tr>
+					</template>
+					<hr />
+					<div class="space-between">
+						<button name="cancel" class="cancel" type="button">Anulează</button>
+						<button class="accept">Comandă</button>
+					</div>
+				</form>
+				<span>Coșul este gol.</span>
+			</div>
+		</details>
+	</header>
+	<nav>
+		<div class="menu">
+			<a data-view="hardware" class="menu-name">Piese</a>
+			<div class="dropdown column-flow">
+				<div class="decorated category-list">
+					<span class="title">Componente</span>
+					<a data-view="cpu">CPU</a>
+					<a data-view="gpu">GPU</a>
+					<a data-view="ram">RAM</a>
+					<a data-view="mb">Plăci de bază</a>
+				</div>
+				<div class="decorated category-list">
+					<span class="title">Periferice</span>
+					<a data-view="mouse">Mouse</a>
+					<a data-view="kb">Tastiere</a>
+					<a data-view="cam">Camere web</a>
+				</div>	
+			</div>
+		</div>
+		<div class="menu">
+			<a data-view="computer" class="menu-name">Calculatoare</a>
+			<div class="dropdown column-flow">
+				<div class="decorated category-list">
+					<a data-view="pc">Staționar</a>
+					<a data-view="laptop">Laptop</a>
+				</div>
+			</div>
+		</div>
+		<a href="contact.html">Contacte</a>
+		<a href="about.html">Despre noi</a>
+	</nav>
+	<main>
+		<article>
+			<h1 id="produsele-recomandate">Produsele recomandate</h1>
+			<section>
+				<div class="carousel-container" data-idx="0" data-mx="3" data-auto="right" data-img-path="img/carousel/"></div>
+				<noscript>
+					<p>Activați JavaScript pentru a vizualiza produsele recomandate.</p>
+				</noscript>
+			</section>
+		</article>
+		
+	</main>
+	<footer>
+		<div class="column-flow">
+			<div class="category-list">
+				<span class="title">Despre „Magazin Hardware”</span>
+				<a href="about.html#despre-proiect">Concepția bazei de date</a>
+				<a href="about.html#sgbd">Mini-SGBD</a>
+				<a href="about.html#ls">Lucrarea științifică</a>
+			</div>
+			<div class="category-list">
+				<span class="title">Despre autor</span>
+				<a href="file:///E:/eBook/USM/HTML/laborator/individual/contact.html">Contacte</a>
+				<a target="_blank" href="https://sites.google.com/view/cemirtantic">Siteul personal</a>
+				<a target="_blank" href="https://cemirtan.blogspot.com/">Blogul personal</a>
+			</div>
+		</div>
+		<hr />
+		<div style="text-align: center">Copyright © Cristian Cemîrtan 2022</div>
+	</footer>
+</body>
+</html>

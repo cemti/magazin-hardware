@@ -1,0 +1,384 @@
+@charset "utf-8";
+
+:root {
+	--margin: 10%;
+	--main-color: #ab8518;
+	--secondary-color: #876913;
+	--content-color: beige;
+	--dark-color: #242512;
+	--gap: 5px;
+	--border-radius: 5px
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 0;
+	font-weight: 600
+}
+
+/* Sa se afecteze si flex-itemi */
+[hidden] {
+	display: none
+}
+
+p {
+	text-align: justify;
+	text-indent: 1cm
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	min-height: 100vh;
+	background: var(--content-color);
+	font: 12pt system-ui
+}
+
+header {
+	background: var(--dark-color);
+	align-items: center;
+	height: 80px;
+	gap: var(--gap)
+}
+
+aside {
+	display: grid;
+	grid-template-columns: max-content minmax(100px, 300px);
+	border-top: 1px var(--content-color) dashed;
+	align-items: baseline;
+	gap: calc(2 * var(--gap))
+}
+
+aside > form {
+	display: contents
+}
+
+aside > form label {
+	font-size: 1.03em;
+	font-weight: 600
+}
+
+main {
+	flex-grow: 1
+}
+
+footer {
+	background: var(--dark-color);
+	color: white
+}
+
+section {
+	padding-inline: 5%
+}
+
+article {
+	counter-reset: figure
+}
+
+figure {
+	text-align: center
+}
+
+figcaption {
+	margin-top: 10px;
+	font-weight: bold;
+	font-size: large
+}
+
+figcaption::before {
+	counter-increment: figure;
+	content: 'Figura 'counter(figure)'. '
+}
+
+body > :not(main) {
+	flex-shrink: 0
+}
+
+body > * {
+	padding: 15px var(--margin) 15px var(--margin)
+}
+
+nav, aside {
+	background: linear-gradient(to right, var(--dark-color) 0%, var(--main-color) 10%, var(--main-color) 90%, var(--dark-color) 100%);
+	color: white
+}
+
+nav {
+	display: flex;
+	padding-top: 0;
+	padding-bottom: 0
+}
+
+nav > * {
+	user-select: none;
+	transition: background .25s
+}
+
+.category-list a,
+a.menu-name,
+nav > a {
+	text-decoration: none;
+	color: inherit
+}
+
+#logo {
+	background: url('../img/logo.png') 0 0 / 100% 100%;
+	aspect-ratio: 5 / 1;
+	height: 100%
+}
+
+input, button, textarea, select, fieldset {
+	border-radius: var(--border-radius);
+	user-select: none;
+	min-width: 0
+}
+
+textarea {
+	text-align: justify;
+	font: 12pt serif;
+	resize: none
+}
+
+button {
+	border: none;
+	font: inherit;
+	background: white;
+	color: black
+}
+
+button:active {
+	filter: brightness(.75)
+}
+
+button::before {
+	content: var(--before)' '
+}
+
+button.accept {
+	background: green;
+	color: white;
+	--before: '✓'
+}
+
+button.cancel {
+	background: red;
+	color: white;
+	--before: '✖'
+}
+
+button.add {
+	background: var(--secondary-color);
+	color: white;
+	--before: '🛒'
+}
+
+button.close {
+	background: var(--main-color);
+	color: white;
+	--before: '✖'
+}
+
+button.pagination {
+	background: var(--main-color);
+	width: 40px;
+	height: 40px;
+	font-size: x-large;
+	color: white;
+	counter-increment: page;
+	--before: counter(page)
+}
+
+button.pagination:hover:not(:active) {
+	filter: brightness(.9)
+}
+
+button.pagination.selected {
+	background: var(--secondary-color);
+	color: white
+}
+
+:invalid::placeholder {
+	color: silver
+}
+
+:read-write:invalid {
+	background: indianred;
+	color: white
+}
+
+.pagination-container {
+	counter-reset: page;
+	display: flex;
+	gap: var(--gap);
+	justify-content: center
+}
+
+.space-between {
+	display: flex;
+	justify-content: space-between
+}
+
+.menu > .menu-name {
+	display: list-item;
+	list-style: inside disclosure-closed
+}
+
+.menu:is(:hover, :focus-within) > .menu-name {
+	list-style-type: disclosure-open
+}
+
+button, summary {
+	cursor: pointer
+}
+
+nav > a,
+nav > .menu > .menu-name,
+nav > details > summary {
+	padding: 10px;
+	text-align: center
+}
+
+nav > :is(:focus-within, :hover, details[open]) {
+	background: linear-gradient(to bottom, var(--secondary-color) 30%, var(--main-color));
+}
+
+nav > .menu:is(:focus-within, :hover) > .menu-name,
+nav > details[open] {
+	position: relative;
+	box-shadow: 0 1px 0 0 var(--main-color);
+	z-index: 2
+}
+
+/* nu are .dropdown */
+nav > details[open] {
+	z-index: 0
+}
+
+.column-flow {
+	display: grid;
+	gap: calc(2 * var(--gap));
+	grid-auto-flow: column
+}
+
+.dropdown.column-flow {
+	grid-auto-columns: minmax(max-content, 1fr)
+}
+
+.dropdown {
+	color: initial;
+	position: absolute;
+	z-index: 1;
+	background: white;
+	padding: 10px;
+	transition: transform .25s;
+	border-radius: 0 0 var(--border-radius) var(--border-radius)
+}
+
+.menu {
+	position: relative
+}
+
+.menu > .dropdown {
+	border-top: 1px var(--content-color) dashed;
+	box-sizing: border-box;
+	min-width: 100%;
+	background: var(--main-color);
+	transform-origin: top;
+	color: white
+}
+
+.category-list {
+	display: flex;
+	gap: var(--gap);
+	flex-direction: column
+}
+
+.title {
+	text-align: center;
+	font-size: larger;
+	font-weight: 600
+}
+
+.category-list.decorated a {
+	border-bottom: 1px lightgrey solid;
+	text-align: center;
+	padding-inline: 5px;
+}
+
+:not(nav) > a:not(.menu-name):is(:hover, :focus) {
+	filter: brightness(.8)
+}
+
+:not(details):not(:is(:focus-within, :hover)) > .dropdown:not(:hover) {
+	visibility: hidden;
+	transform: scale(1, 0)
+}
+
+nav > * {
+	border: 1px var(--content-color);
+	border-left-style: solid
+}
+
+@media (orientation: landscape) {
+	.menu > .dropdown {
+		box-shadow: 
+			-1px 0 var(--content-color),
+			0 1px var(--content-color),
+			1px 0 var(--content-color)
+	}
+	
+	nav > :last-child {
+		border-right-style: solid
+	}
+	
+	@media (max-width: 703px) {
+		nav > * {
+			flex-grow: 1
+		}
+	}
+}
+
+@media (orientation: portrait) {
+	.menu > .dropdown {
+		box-shadow: 0 1px var(--content-color)
+	}
+	
+	nav {
+		flex-direction: column
+	}
+	
+	nav > * {
+		border-right-style: solid
+	}
+	
+	nav > :nth-child(n + 2) {
+		border-top-style: solid
+	}
+	
+	nav > * > .dropdown {
+		box-sizing: border-box;
+		width: calc(100% - 2 * var(--margin) - 2px)
+	}
+	
+	aside {
+		justify-content: center
+	}
+}
+
+@media (min-width: 811px) and (max-width: 900px) {
+	#logo {
+		height: 80%
+	}
+}
+
+@media (min-width: 701px) and (max-width: 810px) {
+	#logo {
+		height: 65%
+	}
+}
+
+@media (max-width: 700px) {
+	header {
+		flex-direction: column
+	}
+}

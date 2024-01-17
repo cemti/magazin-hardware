@@ -1,0 +1,90 @@
+#formAlert {
+	color: red
+}
+
+#formWarn.importance {
+	font-size: larger;
+	font-weight: 600
+}
+
+legend {
+	font-size: 1.05em
+}
+
+legend + div {
+	display: grid;
+	grid-template-columns: min-content 1fr;
+}
+
+#checkout legend + div label > * {
+	margin: 0 0 5px 10px;
+}
+
+#checkout legend + div label {
+	display: contents;
+	white-space: nowrap
+}
+
+#plaseaza-comanda + section {
+	display: flex;
+	gap: calc(6 * var(--gap))
+}
+
+#tos[open] {
+	display: flex;
+	flex-direction: column;
+	inset: calc(2 * var(--margin));
+	padding: 20px;
+	border-radius: var(--border-radius);
+	width: unset;
+	height: unset;
+	border: none
+}
+
+#tos[open]::backdrop {
+	background: #0000007f
+}
+
+#tos > :first-child {
+	position: relative;
+	border-bottom: 1px black solid
+}
+
+#tos > :first-child > form {
+	position: absolute;
+	top: 0;
+	right: 0
+}
+
+@media (min-width: 1208px) {
+	#cartView[data-has-items] > .dropdown {
+		position: fixed;
+		border-radius: var(--border-radius);
+		top: 10px;
+		opacity: .8;
+		pointer-events: none
+	}
+	
+	#cartView[data-has-items] > .dropdown[data-left] {
+		left: var(--margin);
+		right: unset
+	}
+}
+
+@media (min-width: 1501px) {
+	form {
+		flex-shrink: 0
+	}
+}
+
+@media (max-width: 1500px) {
+	#plaseaza-comanda + section {
+		flex-direction: column
+	}
+}
+
+@media (max-width: 700px) {
+	#checkout {
+		font-size: small
+	}
+}

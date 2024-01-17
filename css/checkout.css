@@ -1,33 +1,11 @@
+@import 'products.css';
+
 #formAlert {
 	color: red
 }
 
-#formWarn.importance {
-	font-size: larger;
-	font-weight: 600
-}
-
 legend {
 	font-size: 1.05em
-}
-
-legend + div {
-	display: grid;
-	grid-template-columns: min-content 1fr;
-}
-
-#checkout legend + div label > * {
-	margin: 0 0 5px 10px;
-}
-
-#checkout legend + div label {
-	display: contents;
-	white-space: nowrap
-}
-
-#plaseaza-comanda + section {
-	display: flex;
-	gap: calc(6 * var(--gap))
 }
 
 #tos[open] {
@@ -54,6 +32,11 @@ legend + div {
 	position: absolute;
 	top: 0;
 	right: 0
+}
+
+#cartView:not([open]) > summary {
+	background: red;
+	color: white
 }
 
 @media (min-width: 1208px) {

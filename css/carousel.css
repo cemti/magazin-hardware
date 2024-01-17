@@ -75,7 +75,7 @@
 	line-height: 30px;
 	gap: var(--gap);
 	color: var(--main-color);
-	transform-origin: bottom;
+	transform-origin: bottom
 }
 
 .carousel-container > .carousel-bullets > .carousel-bullet {

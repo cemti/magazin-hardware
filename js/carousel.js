@@ -1,6 +1,6 @@
 'use strict';
 
-{
+(async () => {
 	const carouselContainers = document.getElementsByClassName('carousel-container');
 	
 	for (const container of carouselContainers) {
@@ -16,7 +16,7 @@
 			bullets.children[container.dataset.idx].classList.remove('selected');
 			
 			if (newIdx === true) {
-				if (container.dataset.idx == container.dataset.mx) {
+				if (container.dataset.idx == carousel.childElementCount - 1) {
 					container.dataset.idx = 0;
 				}
 				else {
@@ -25,7 +25,7 @@
 			}
 			else if (newIdx === false) {
 				if (container.dataset.idx == 0) {
-					container.dataset.idx = container.dataset.mx;
+					container.dataset.idx = carousel.childElementCount - 1;
 				}
 				else {
 					--container.dataset.idx;
@@ -39,14 +39,16 @@
 			carousel.style.setProperty('--idx', container.dataset.idx);
 		};
 		
-		for (let i = 0; i <= container.dataset.mx; ++i) {
+		const carousels = await (await fetch('/img?carousels')).json();
+		
+		for (let i = 0; i < carousels.length; ++i) {
 			const bullet = document.createElement('span');
 			bullet.className = 'carousel-bullet';
 			bullet.onclick = () => carouselMove(i);
 			bullets.append(bullet);
 			
 			const img = document.createElement('img');
-			img.src = `${container.dataset.imgPath}${i}.jpg`;
+			img.src = `/img?carousel=${carousels[i]}`;
 			carousel.append(img);
 		}
 		
@@ -62,17 +64,7 @@
 		right.onclick = () => carouselMove(true);
 		container.append(right);
 		
-		let targetBtn;
-		
-		if (container.dataset.auto == 'left') {
-			targetBtn = left;
-		}
-		else if (container.dataset.auto == 'right') {
-			targetBtn = right;
-		}
-		else {
-			continue;
-		}
+		const targetBtn = container.dataset.auto == 'left' ? left : right;
 		
 		(async () => {
 			for (; ; ) {
@@ -81,4 +73,4 @@
 			}
 		})();
 	}
-}
+})();

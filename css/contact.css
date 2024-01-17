@@ -1,0 +1,9 @@
+#contacte + section {
+	display: flex;
+	flex-wrap: wrap;
+	gap: calc(3 * var(--gap))
+}
+
+#contacte + section > :first-child {
+	flex-grow: 1
+}

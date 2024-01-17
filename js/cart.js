@@ -1,35 +1,33 @@
 'use strict';
 
-document.querySelectorAll('[data-view]').forEach(x => x.href = `products.html?view=${x.dataset.view}`);
+document.querySelectorAll('[data-view]').forEach(x => x.href = `/products.php?view=${x.dataset.view}`);
 
-var cartItems;
+var cartItems, cartUpdated;
 
-function updateCart(entry = false) {
+async function updateCart(entry = false) {
 	if (entry === true) {
 		delete localStorage.cartItems;
 		delete cartView.dataset.hasItems;
 
-		cartItems = [];
+		cartItems = {};
 		document.cart.querySelector('.cart-table > tbody').innerHTML = '';
 		
-		for (var em of document.getElementsByClassName('cart-count')) {
+		for (const em of document.getElementsByClassName('cart-count')) {
 			em.innerText = 0;
 		}
 		
-		for (var em of document.getElementsByClassName('cart-total')) {
+		for (const em of document.getElementsByClassName('cart-total')) {
 			em.innerText = '0.00';
 		}
 
 		return;
 	}
 	else if (entry !== false) {
-		const idx = cartItems.findIndex(x => x.name === entry.name);
-		
-		if (idx != -1) {
-			cartItems[idx].count += entry.count;
+		if (entry.id in cartItems) {
+			cartItems[entry.id] += entry.count;
 		}
 		else {
-			cartItems.push(entry);
+			cartItems[entry.id] = entry.count;
 		}
 	}
 	
@@ -41,54 +39,43 @@ function updateCart(entry = false) {
 		const rowTemplate = cartBodyRowTemplate.content;
 		const fragment = document.createDocumentFragment();
 		let i = 0;
-		
-		for (const item of cartItems) {
-			const realPrice = item.count * item.price;
-			count += item.count;
+
+		for (const [id, itemCount] of Object.entries(cartItems)) {
+			const product = (await (await fetch(`/frag/fetchProducts.php?id=${id}`)).json()).items[0];
+			
+			const realPrice = itemCount * product.price;
+			count += itemCount;
 			total += realPrice;
 
 			const row = rowTemplate.cloneNode(true);
 			const cells = row.querySelectorAll('td');
-			const idx = i++;
-
-			const cartRemoveItem = cells[0].querySelector('.cart-remove-item');
 			
-			if (cartRemoveItem != null) {
-				if (item.name == 'Amendă') {
-					if ('cancel' in document.cart) {
-						document.cart.cancel.remove();
-					}
-					cartRemoveItem.remove();
-				}
-				else {
-					cartRemoveItem.onclick = () => {
-						cartItems.splice(idx, 1);
+			{
+				const removeItem = cells[0].querySelector('.cart-remove-item');
+				
+				if (removeItem !== null) {
+					cells[0].querySelector('.cart-remove-item').onclick = () => {
+						delete cartItems[id];
 						updateCart();
 					};
 				}
 			}
 
-			if ('vendor' in item) {
-				cells[0].prepend(`${item.vendor} ${item.name}`);
-			}
-			else {
-				cells[0].prepend(item.name);
-			}
+			cells[0].prepend(`${product.vendor} ${product.name}`);
 
 			const input = cells[1].children[0];
-			input.value = item.count;
+			input.value = itemCount;
 			
 			if (input instanceof HTMLInputElement) {
 				input.onblur = () => {
-					if (input.reportValidity() && cartItems[idx].count != input.valueAsNumber) {
-						cartItems[idx].count = input.valueAsNumber;
+					if (input.reportValidity() && cartItems[id] != input.valueAsNumber) {
+						cartItems[id] = input.valueAsNumber;
 						updateCart();
 					}
 				};
 			}
 			
 			cells[2].innerText = realPrice.toFixed(2);
-
 			fragment.append(row);
 		}
 		
@@ -105,20 +92,40 @@ function updateCart(entry = false) {
 		em.innerHTML = total.toFixed(2);
 	}
 
-	if (cartItems.length) {
+	if (Object.keys(cartItems).length > 0) {
 		cartView.dataset.hasItems = '';
 	} else {
 		delete cartView.dataset.hasItems;
 	}
 }
 
-if ('localStorage' in window) {
+function saveCart() {
+	fetch('/panel/', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(cartItems)
+	});
+}
+
+async function loadCart() {
 	try {
-		cartItems = JSON.parse(localStorage.cartItems);
+		cartItems = await (await fetch('/panel?get')).json();
 		updateCart();
 	}
 	catch {
-		cartItems = [];
+		updateCart(true);
+	}
+}
+
+if ('localStorage' in window) {
+	try {
+		cartItems = JSON.parse(localStorage.cartItems);
+		cartUpdated = updateCart();
+	}
+	catch {
+		cartItems = {};
 	}
 	
 	if ('cancel' in document.cart) {

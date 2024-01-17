@@ -58,6 +58,10 @@ aside > form label {
 	font-weight: 600
 }
 
+form label > :is(input, select) {
+	margin: 0 0 5px 10px
+}
+
 main {
 	flex-grow: 1
 }
@@ -67,7 +71,7 @@ footer {
 	color: white
 }
 
-section {
+section:not([data-basic]) {
 	padding-inline: 5%
 }
 
@@ -317,6 +321,21 @@ nav > details[open] {
 nav > * {
 	border: 1px var(--content-color);
 	border-left-style: solid
+}
+
+.neat-div {
+	display: grid;
+	grid-template-columns: min-content 1fr
+}
+
+.neat-div label {
+	display: contents;
+	white-space: nowrap
+}
+
+.column-section {
+	display: flex;
+	gap: calc(6 * var(--gap))
 }
 
 @media (orientation: landscape) {

@@ -1,0 +1,15 @@
+figure > div {
+	display: flex;
+	justify-content: center;
+	gap: calc(2 * var(--gap))
+}
+
+figure img {
+	width: 100%;
+}
+
+@media (orientation: portrait) {
+	figure > div {
+		flex-wrap: wrap
+	}
+}
